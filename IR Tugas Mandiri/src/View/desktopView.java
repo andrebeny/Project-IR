@@ -7,10 +7,15 @@ package View;
 
 import java.util.*;
 import java.io.*;
+import java.nio.*;
 import javax.swing.JOptionPane;
 import Model.Document;
 import Model.InvertedIndex;
 import Model.Posting;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 import static sun.reflect.annotation.AnnotationParser.toArray;
 
 /**
@@ -42,7 +47,6 @@ public class desktopView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         queryInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
-        readButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,13 +63,6 @@ public class desktopView extends javax.swing.JFrame {
             }
         });
 
-        readButton.setText("read");
-        readButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,8 +74,7 @@ public class desktopView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(readButton)
-                        .addGap(199, 199, 199)
+                        .addGap(254, 254, 254)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
@@ -89,9 +85,7 @@ public class desktopView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(readButton)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -121,6 +115,10 @@ public class desktopView extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
+        String dir ="C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen";
+        File file = new File(dir);
+        
+        
         String query = queryInput.getText();
         double result;
 
@@ -135,26 +133,7 @@ public class desktopView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
-    private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
-        // TODO add your handling code here:
-        FilenameFilter filter = new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".txt");
-            }
-        };
-        
-        File folder = new File("/path/to/files");
-        File[] listOfFiles = folder.listFiles();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            File file = listOfFiles[i];
-            if (file.isFile() && file.getName().endsWith(".txt")) {
-                //String content = FileUtils.readFileToString(file);
-                /* do somthing with content */
-            }
-        }
-    }//GEN-LAST:event_readButtonActionPerformed
-
+   
     /**
      * @param args the command line arguments
      */
@@ -194,7 +173,6 @@ public class desktopView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField queryInput;
-    private javax.swing.JButton readButton;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }
