@@ -5,11 +5,22 @@
  */
 package View;
 
+import java.util.*;
+import java.io.*;
+import javax.swing.JOptionPane;
+import Model.Document;
+import Model.InvertedIndex;
+import Model.Posting;
+import static sun.reflect.annotation.AnnotationParser.toArray;
+
 /**
  *
  * @author User
  */
 public class desktopView extends javax.swing.JFrame {
+
+    private java.util.ArrayList<Document> toArray = new ArrayList<Document>();
+    InvertedIndex index = new InvertedIndex();
 
     /**
      * Creates new form desktopView
@@ -29,21 +40,29 @@ public class desktopView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        queryInput = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        readButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Algerian", 1, 36)); // NOI18N
         jLabel1.setText("SEARCH ENGINE");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        queryInput.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        queryInput.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        jButton1.setText("SEARCH");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        searchButton.setText("SEARCH");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchButtonActionPerformed(evt);
+            }
+        });
+
+        readButton.setText("read");
+        readButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readButtonActionPerformed(evt);
             }
         });
 
@@ -51,29 +70,32 @@ public class desktopView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(360, 360, 360))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(272, 272, 272)
+                        .addComponent(readButton)
+                        .addGap(199, 199, 199)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(132, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(360, 360, 360))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(readButton)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(216, Short.MAX_VALUE))
         );
 
@@ -97,9 +119,41 @@ public class desktopView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String query = queryInput.getText();
+        double result;
+
+        for (int i = 0; i < toArray.size(); i++) {
+            index.addNewDocument(toArray.get(i));
+        }
+        ArrayList<Posting> qPosting = index.getQueryPosting(query);
+        for (int j = 0; j < toArray.size(); j++) {
+            ArrayList<Posting> tempBobot = index.makeTFIDF(toArray.get(j).getId());
+            result = index.getCosineSimilarity(qPosting, tempBobot);
+            toArray.get(j).setCosineSimilarity(result);
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
+        // TODO add your handling code here:
+        FilenameFilter filter = new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".txt");
+            }
+        };
+        
+        File folder = new File("/path/to/files");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            File file = listOfFiles[i];
+            if (file.isFile() && file.getName().endsWith(".txt")) {
+                //String content = FileUtils.readFileToString(file);
+                /* do somthing with content */
+            }
+        }
+    }//GEN-LAST:event_readButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,9 +191,10 @@ public class desktopView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField queryInput;
+    private javax.swing.JButton readButton;
+    private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }
