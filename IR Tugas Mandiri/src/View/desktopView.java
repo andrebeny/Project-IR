@@ -25,6 +25,7 @@ import View.testreadfilefolder;
 public class desktopView extends javax.swing.JFrame {
 
     JFileChooser fileChooser = new JFileChooser();
+    InvertedIndex tempIndex = new InvertedIndex();
 
     /**
      * Creates new form desktopView
@@ -252,12 +253,12 @@ public class desktopView extends javax.swing.JFrame {
 
     private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
         // TODO add your handling code here:
-        InvertedIndex tempInd = new InvertedIndex();
+       
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        tempInd.listAllFiles(folder);
-        tempInd.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        tempIndex.listAllFiles(folder);
+        tempIndex.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
 
-        ArrayList<Document> listDoc = tempInd.getListOfDocument();
+        ArrayList<Document> listDoc = tempIndex.getListOfDocument();
         for (int i = 0; i < listDoc.size(); i++) {
             Document doc = listDoc.get(i);
             System.out.println("ID ;" + doc.getId());
@@ -282,12 +283,12 @@ public class desktopView extends javax.swing.JFrame {
         double result;
 
         for (int i = 0; i < toArray.size(); i++) {
-            index.addNewDocument(toArray.get(i));
+            tempIndex.addNewDocument(toArray.get(i));
         }
-        ArrayList<Posting> qPosting = index.getQueryPosting(query);
+        ArrayList<Posting> qPosting = tempIndex.getQueryPosting(query);
         for (int j = 0; j < toArray.size(); j++) {
-            ArrayList<Posting> tempBobot = index.makeTFIDF(toArray.get(j).getId());
-            result = index.getCosineSimilarity(qPosting, tempBobot);
+            ArrayList<Posting> tempBobot = tempIndex.makeTFIDF(toArray.get(j).getId());
+            result = tempIndex.getCosineSimilarity(qPosting, tempBobot);
             toArray.get(j).setCosineSimilarity(result);
         }
 
@@ -334,7 +335,7 @@ public class desktopView extends javax.swing.JFrame {
     }
     private java.util.ArrayList<Document> toArray = new ArrayList<Document>();
     ArrayList<String> toResult = new ArrayList<>();
-    InvertedIndex index = new InvertedIndex();
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addItem;
