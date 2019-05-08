@@ -16,7 +16,9 @@ import javafx.scene.shape.Path;
 import Model.Document;
 import Model.InvertedIndex;
 import Model.Posting;
+import Model.SearchingResult;
 import View.testreadfilefolder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,7 +27,7 @@ import View.testreadfilefolder;
 public class desktopView extends javax.swing.JFrame {
 
     JFileChooser fileChooser = new JFileChooser();
-    InvertedIndex tempIndex = new InvertedIndex();
+    InvertedIndex Index = new InvertedIndex();
 
     /**
      * Creates new form desktopView
@@ -49,7 +51,7 @@ public class desktopView extends javax.swing.JFrame {
         queryInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TableHasil = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         addItem = new javax.swing.JMenuItem();
@@ -84,7 +86,7 @@ public class desktopView extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TableHasil.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -191,7 +193,7 @@ public class desktopView extends javax.swing.JFrame {
                 "ID Dokumen", "Content", "Cosine Similarity"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(TableHasil);
 
         jMenu1.setText("File");
 
@@ -226,13 +228,14 @@ public class desktopView extends javax.swing.JFrame {
                         .addComponent(searchButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(139, 139, 139)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(323, 323, 323)
-                        .addComponent(jLabel1)))
-                .addContainerGap(191, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,9 +246,9 @@ public class desktopView extends javax.swing.JFrame {
                 .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,12 +256,12 @@ public class desktopView extends javax.swing.JFrame {
 
     private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
         // TODO add your handling code here:
-       
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        tempIndex.listAllFiles(folder);
-        tempIndex.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
 
-        ArrayList<Document> listDoc = tempIndex.getListOfDocument();
+        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        Index.listAllFiles(folder);
+        Index.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+
+        ArrayList<Document> listDoc = Index.getListOfDocument();
         for (int i = 0; i < listDoc.size(); i++) {
             Document doc = listDoc.get(i);
             System.out.println("ID ;" + doc.getId());
@@ -279,24 +282,20 @@ public class desktopView extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
+        Index.makeDictionaryWithTermNumber();
         String query = queryInput.getText();
         double result;
 
-        for (int i = 0; i < toArray.size(); i++) {
-            tempIndex.addNewDocument(toArray.get(i));
+        ArrayList<Posting> qPosting = Index.getQueryPosting(query);
+        ArrayList<Document> listDoc = Index.getListOfDocument();
+        
+        for (int i = 0; i < listDoc.size(); i++) {
+            ArrayList<Posting> tempDocWeight = Index.makeTFIDF(listDoc.get(i).getId());
+            TableHasil.setValueAt(listDoc.get(i).getId(), i, 0);
+            TableHasil.setValueAt(listDoc.get(i).getContent(), i, 1);
+            TableHasil.setValueAt(Index.getCosineSimilarity(qPosting, tempDocWeight), i, 2);
         }
-        ArrayList<Posting> qPosting = tempIndex.getQueryPosting(query);
-        for (int j = 0; j < toArray.size(); j++) {
-            ArrayList<Posting> tempBobot = tempIndex.makeTFIDF(toArray.get(j).getId());
-            result = tempIndex.getCosineSimilarity(qPosting, tempBobot);
-            toArray.get(j).setCosineSimilarity(result);
-        }
-
-        for (int k = 0; k < toArray.size(); k++) {
-            jTable1.setValueAt(toArray.get(k).getId(), k, 0);
-            jTable1.setValueAt(toArray.get(k).getContent(), k, 1);
-            jTable1.setValueAt(toArray.get(k).getCosineSimilarity(), k, 2);
-        }
+       
     }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
@@ -335,9 +334,10 @@ public class desktopView extends javax.swing.JFrame {
     }
     private java.util.ArrayList<Document> toArray = new ArrayList<Document>();
     ArrayList<String> toResult = new ArrayList<>();
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableHasil;
     private javax.swing.JMenuItem addItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
@@ -345,7 +345,6 @@ public class desktopView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField queryInput;
     private javax.swing.JMenuItem readItem;
     private javax.swing.JButton searchButton;
