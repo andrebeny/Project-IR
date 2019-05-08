@@ -81,7 +81,7 @@ public class testreadfilefolder {
             // Read lines from the file, returns null when end of stream 
             // is reached
             while ((strLine = br.readLine()) != null) {
-                //doc.setContent(strLine);
+                doc.setContent(strLine);
                 System.out.println("Line is - " + strLine);
             }
         }

@@ -252,10 +252,17 @@ public class desktopView extends javax.swing.JFrame {
 
     private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
         // TODO add your handling code here:
+        InvertedIndex tempInd = new InvertedIndex();
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        testreadfilefolder listFiles = new testreadfilefolder();
-        listFiles.listAllFiles(folder);
-        
+        tempInd.listAllFiles(folder);
+        tempInd.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+
+        ArrayList<Document> listDoc = tempInd.getListOfDocument();
+        for (int i = 0; i < listDoc.size(); i++) {
+            Document doc = listDoc.get(i);
+            System.out.println("ID ;" + doc.getId());
+            System.out.println(doc.getContent());
+        }
     }//GEN-LAST:event_readItemActionPerformed
 
     private void addItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemActionPerformed
