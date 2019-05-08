@@ -9,11 +9,26 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.CharArraySet;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.StopFilter;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.PorterStemFilter;
+import org.apache.lucene.analysis.id.IndonesianAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 /**
  *
  * @author admin
@@ -142,7 +157,7 @@ public class Document implements Comparable<Document> {
             br.close();
         } catch (FileNotFoundException ex) {
             System.out.println("File Not Found");
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
     }
@@ -161,6 +176,65 @@ public class Document implements Comparable<Document> {
         this.CosineSimilarity = CosineSimilarity;
     }
 
+    public void removeStopWords() {
+        // asumsi content sudah ada
+        String text = content;
+        Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
+        Analyzer analyzer = new StandardAnalyzer();
+        analyzer.setVersion(matchVersion);
+        // ambil stopwords
+        CharArraySet stopWords = EnglishAnalyzer.getDefaultStopSet();
+        // buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(text.trim()));
+        // buang stop word
+        tokenStream = new StopFilter(tokenStream, stopWords);
+        // buat string baru tanpa stopword
+        StringBuilder sb = new StringBuilder();
+        CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        try {
+            tokenStream.reset();
+            while (tokenStream.incrementToken()) {
+                String term = charTermAttribute.toString();
+                sb.append(term + " ");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+        content = sb.toString();
+    }
+
+    /**
+     * Fungsi untuk menghilangkan stop word dan stemming
+     */
+    public void stemming() {
+        String text = content;
+//        System.out.println("Text = "+text);
+        Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
+        Analyzer analyzer = new StandardAnalyzer();
+        analyzer.setVersion(matchVersion);
+        // buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(text.trim()));
+        // stemming
+        tokenStream = new PorterStemFilter(tokenStream);
+        // buat string baru tanpa stopword
+        StringBuilder sb = new StringBuilder();
+        CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        try {
+            tokenStream.reset();
+            while (tokenStream.incrementToken()) {
+                String term = charTermAttribute.toString();
+                sb.append(term + " ");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+        content = sb.toString();
+    }
+
     /**
      * @return the realContent
      */
@@ -174,5 +248,61 @@ public class Document implements Comparable<Document> {
     public void setRealContent(String realContent) {
         this.realContent = realContent;
     }
+
+    /**
+     * Fungsi untuk mensteming content dalam bahasa indonesia
+     */
+    public void IndonesiaStemming() {
+        Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
+        Analyzer analyzer = new IndonesianAnalyzer();
+        analyzer.setVersion(matchVersion);
+        // ambil stopwords
+        CharArraySet stopWords = IndonesianAnalyzer.getDefaultStopSet();
+        // buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(realContent.trim()));
+        // buang stop word
+        tokenStream = new StopFilter(tokenStream, stopWords);
+        // buat string baru tanpa stopword
+        StringBuilder sb = new StringBuilder();
+        CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        try {
+            tokenStream.reset();
+            while (tokenStream.incrementToken()) {
+                String term = charTermAttribute.toString();
+                sb.append(term + " ");
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+        content = sb.toString();
+    }
+
+    /**
+     * Fungsi baca file pdf yang dibentu dari pengolah kata. File pdf tidak bisa
+     * dibaca jika bentuknya gambar/citra
+     *
+     * @param pdfFile
+     */
+    public void readPDFFile(File pdfFile) {
+        try {
+            //Loading an existing document
+            PDDocument document = null;
+            document = PDDocument.load(pdfFile);
+            
+            //Instantiate PDFTextStripper class
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            
+            //Retrieving text from PDF document
+            String text = pdfStripper.getText(document);
+//            System.out.println(text);
+            realContent = text;
+            //Closing the document
+            document.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 
 }
