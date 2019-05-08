@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.shape.Path;
 import Model.Document;
-import Model.InvertedIndex;
+import Model.InvertedIndex2;
 import Model.Posting;
 import Model.SearchingResult;
 import View.testreadfilefolder;
@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 public class desktopView extends javax.swing.JFrame {
 
     JFileChooser fileChooser = new JFileChooser();
-    InvertedIndex Index = new InvertedIndex();
+    InvertedIndex2 Index = new InvertedIndex2();
 
     /**
      * Creates new form desktopView
