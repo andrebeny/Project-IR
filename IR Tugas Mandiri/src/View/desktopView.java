@@ -5,10 +5,18 @@
  */
 package View;
 
-import java.io.*;
 import javax.swing.*;
-
-
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.shape.Path;
+import Model.Document;
+import Model.InvertedIndex;
+import Model.Posting;
+import View.testreadfilefolder;
 
 /**
  *
@@ -69,6 +77,11 @@ public class desktopView extends javax.swing.JFrame {
         queryInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         searchButton.setText("SEARCH");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,6 +252,9 @@ public class desktopView extends javax.swing.JFrame {
 
     private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
         // TODO add your handling code here:
+        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        testreadfilefolder listFiles = new testreadfilefolder();
+        listFiles.listAllFiles(folder);
         
     }//GEN-LAST:event_readItemActionPerformed
 
@@ -247,11 +263,33 @@ public class desktopView extends javax.swing.JFrame {
         fileChooser.showOpenDialog(null);
         File file = fileChooser.getSelectedFile();
         String dir = file.getName();
-        
+
         if (!file.getName().endsWith("txt")) {
             JOptionPane.showMessageDialog(null, "File Format doesn't support. Please select txt file format only! ", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addItemActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+        String query = queryInput.getText();
+        double result;
+
+        for (int i = 0; i < toArray.size(); i++) {
+            index.addNewDocument(toArray.get(i));
+        }
+        ArrayList<Posting> qPosting = index.getQueryPosting(query);
+        for (int j = 0; j < toArray.size(); j++) {
+            ArrayList<Posting> tempBobot = index.makeTFIDF(toArray.get(j).getId());
+            result = index.getCosineSimilarity(qPosting, tempBobot);
+            toArray.get(j).setCosineSimilarity(result);
+        }
+
+        for (int k = 0; k < toArray.size(); k++) {
+            jTable1.setValueAt(toArray.get(k).getId(), k, 0);
+            jTable1.setValueAt(toArray.get(k).getContent(), k, 1);
+            jTable1.setValueAt(toArray.get(k).getCosineSimilarity(), k, 2);
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,6 +325,9 @@ public class desktopView extends javax.swing.JFrame {
             }
         });
     }
+    private java.util.ArrayList<Document> toArray = new ArrayList<Document>();
+    ArrayList<String> toResult = new ArrayList<>();
+    InvertedIndex index = new InvertedIndex();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addItem;

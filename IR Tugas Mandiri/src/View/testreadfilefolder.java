@@ -35,7 +35,7 @@ public class testreadfilefolder {
     // Uses listFiles method  
 
     public void listAllFiles(File folder) {
-        System.out.println("In listAllfiles(File) method");
+        //System.out.println("In listAllfiles(File) method");
         File[] fileNames = folder.listFiles();
         for (File file : fileNames) {
             // if directory call the same method again
@@ -74,12 +74,14 @@ public class testreadfilefolder {
     }
 
     public void readContent(File file) throws IOException {
+        Document doc = new Document();
         System.out.println("read file " + file.getCanonicalPath());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String strLine;
             // Read lines from the file, returns null when end of stream 
             // is reached
             while ((strLine = br.readLine()) != null) {
+                //doc.setContent(strLine);
                 System.out.println("Line is - " + strLine);
             }
         }
