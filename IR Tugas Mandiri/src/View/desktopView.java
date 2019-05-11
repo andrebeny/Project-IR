@@ -47,6 +47,15 @@ public class desktopView extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuBar4 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         queryInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -57,6 +66,8 @@ public class desktopView extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         addItem = new javax.swing.JMenuItem();
         readItem = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,6 +82,24 @@ public class desktopView extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jMenu2.setText("File");
+        jMenuBar2.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("File");
+        jMenuBar3.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar3.add(jMenu5);
+
+        jMenu6.setText("File");
+        jMenuBar4.add(jMenu6);
+
+        jMenu7.setText("Edit");
+        jMenuBar4.add(jMenu7);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
@@ -79,6 +108,11 @@ public class desktopView extends javax.swing.JFrame {
         queryInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         queryInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         queryInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        queryInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                queryInputActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("SEARCH");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +153,18 @@ public class desktopView extends javax.swing.JFrame {
         jMenu1.add(readItem);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu8.setText("Edit");
+
+        jMenuItem1.setText("Clustering");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu8);
 
         setJMenuBar(jMenuBar1);
 
@@ -193,41 +239,33 @@ public class desktopView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addItemActionPerformed
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-//        Index.makeDictionaryWithTermNumber();
-//        String query = queryInput.getText();
-//        double result;
-//
-//        ArrayList<Posting> qPosting = Index.getQueryPosting(query);
-//        ArrayList<Document> listDoc = Index.getListOfDocument();
-//        
-//        for (int i = 0; i < listDoc.size(); i++) {
-//            ArrayList<Posting> tempDocWeight = Index.makeTFIDF(listDoc.get(i).getId());
-//            TableHasil.setValueAt(listDoc.get(i).getId(), i, 0);
-//            TableHasil.setValueAt(listDoc.get(i).getContent(), i, 1);
-//            TableHasil.setValueAt(Index.getCosineSimilarity(qPosting, tempDocWeight), i, 2);
-//        }
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         DefaultTableModel tmodel = (DefaultTableModel) TableHasil.getModel();
         String query = queryInput.getText();
         double result;
-        
+
         String header[] = new String[]{"ID Document", "Content", "Cosine Similarity"};
         tmodel.setColumnIdentifiers(header);
-        
-        ArrayList<Posting> qPosting = Index.getQueryPosting(query);
-        ArrayList<Document> listDoc = Index.getListOfDocument();
-        
 
+        ArrayList<SearchingResult> hasilCari2 = Index.searchCosineSimilarity(query);
         Object rowData[] = new Object[3];
-        for (int i = 0; i < listDoc.size(); i++) {
-            ArrayList<Posting> tempDocWeight = Index.makeTFIDF(listDoc.get(i).getId());
-            rowData[0] = listDoc.get(i).getId();
-            rowData[1] = listDoc.get(i).getContent();
-            rowData[2] = Index.getCosineSimilarity(qPosting, tempDocWeight);
+        for (int i = 0; i < hasilCari2.size(); i++) {
+            SearchingResult doc = hasilCari2.get(i);
+            rowData[0] = doc.getDocument().getId();
+            rowData[1] = doc.getDocument().getContent();
+            rowData[2] = doc.getSimilarity();
             tmodel.addRow(rowData);
         }
     }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void queryInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_queryInputActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,7 +311,18 @@ public class desktopView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuBar jMenuBar4;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

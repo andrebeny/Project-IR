@@ -522,7 +522,7 @@ public class InvertedIndex2 {
         double result = hasilDotProduct / Math.sqrt(panjang_posting * panjang_posting1);
         if (result == 0) {
             return 0;
-        } else {
+        }else {
             return result;
         }
     }
@@ -665,8 +665,8 @@ public class InvertedIndex2 {
                 listOfDocument.add(doc);
                 makeDictionary();
                 // System.out.println("Line is - " + strLine);
-                i++;
             }
+            i++;
         }
     }
 
