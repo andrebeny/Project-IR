@@ -52,6 +52,7 @@ public class desktopView extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TableHasil = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         addItem = new javax.swing.JMenuItem();
@@ -73,7 +74,7 @@ public class desktopView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
-        jLabel1.setText("SEARCH ENGINE");
+        jLabel1.setText("UU PEMBERANTASAN ");
 
         queryInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         queryInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -88,112 +89,16 @@ public class desktopView extends javax.swing.JFrame {
 
         TableHasil.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "ID Dokumen", "Content", "Cosine Similarity"
+
             }
         ));
         jScrollPane2.setViewportView(TableHasil);
+
+        jLabel2.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
+        jLabel2.setText("TIPIKOR SEARCHING");
 
         jMenu1.setText("File");
 
@@ -224,31 +129,39 @@ public class desktopView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(371, 371, 371)
-                        .addComponent(searchButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(323, 323, 323)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(121, 121, 121)
+                                .addComponent(jLabel2)))
+                        .addGap(56, 56, 56)
+                        .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchButton)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(searchButton)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchButton))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
         );
 
         pack();
@@ -282,20 +195,38 @@ public class desktopView extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
-        Index.makeDictionaryWithTermNumber();
+//        Index.makeDictionaryWithTermNumber();
+//        String query = queryInput.getText();
+//        double result;
+//
+//        ArrayList<Posting> qPosting = Index.getQueryPosting(query);
+//        ArrayList<Document> listDoc = Index.getListOfDocument();
+//        
+//        for (int i = 0; i < listDoc.size(); i++) {
+//            ArrayList<Posting> tempDocWeight = Index.makeTFIDF(listDoc.get(i).getId());
+//            TableHasil.setValueAt(listDoc.get(i).getId(), i, 0);
+//            TableHasil.setValueAt(listDoc.get(i).getContent(), i, 1);
+//            TableHasil.setValueAt(Index.getCosineSimilarity(qPosting, tempDocWeight), i, 2);
+//        }
+        DefaultTableModel tmodel = (DefaultTableModel) TableHasil.getModel();
         String query = queryInput.getText();
         double result;
-
+        
+        String header[] = new String[]{"ID Document", "Content", "Cosine Similarity"};
+        tmodel.setColumnIdentifiers(header);
+        
         ArrayList<Posting> qPosting = Index.getQueryPosting(query);
         ArrayList<Document> listDoc = Index.getListOfDocument();
         
+
+        Object rowData[] = new Object[3];
         for (int i = 0; i < listDoc.size(); i++) {
             ArrayList<Posting> tempDocWeight = Index.makeTFIDF(listDoc.get(i).getId());
-            TableHasil.setValueAt(listDoc.get(i).getId(), i, 0);
-            TableHasil.setValueAt(listDoc.get(i).getContent(), i, 1);
-            TableHasil.setValueAt(Index.getCosineSimilarity(qPosting, tempDocWeight), i, 2);
+            rowData[0] = listDoc.get(i).getId();
+            rowData[1] = listDoc.get(i).getContent();
+            rowData[2] = Index.getCosineSimilarity(qPosting, tempDocWeight);
+            tmodel.addRow(rowData);
         }
-       
     }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
@@ -340,6 +271,7 @@ public class desktopView extends javax.swing.JFrame {
     private javax.swing.JTable TableHasil;
     private javax.swing.JMenuItem addItem;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -519,9 +519,12 @@ public class InvertedIndex2 {
         // cari panjang posting1
         double panjang_posting1 = getLengthOfPosting(posting1);
         // hitung cosine similarity
-        double result
-                = hasilDotProduct / Math.sqrt(panjang_posting * panjang_posting1);
-        return result;
+        double result = hasilDotProduct / Math.sqrt(panjang_posting * panjang_posting1);
+        if (result == 0) {
+            return 0;
+        } else {
+            return result;
+        }
     }
 
     /**
@@ -590,10 +593,8 @@ public class InvertedIndex2 {
         return result;
     }
 
-    
-    
     //read file from folder, 4 method
-     public void readDirectory(File directory) {
+    public void readDirectory(File directory) {
         File files[] = directory.listFiles();
         for (int i = 0; i < files.length; i++) {
             // buat document baru
@@ -663,7 +664,7 @@ public class InvertedIndex2 {
                 doc.setId(i);
                 listOfDocument.add(doc);
                 makeDictionary();
-               // System.out.println("Line is - " + strLine);
+                // System.out.println("Line is - " + strLine);
                 i++;
             }
         }
