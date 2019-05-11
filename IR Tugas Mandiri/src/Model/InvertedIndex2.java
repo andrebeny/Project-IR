@@ -665,8 +665,8 @@ public class InvertedIndex2 {
                 listOfDocument.add(doc);
                 makeDictionary();
                 // System.out.println("Line is - " + strLine);
+                i++;
             }
-            i++;
         }
     }
 

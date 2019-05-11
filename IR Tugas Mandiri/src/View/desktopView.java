@@ -254,10 +254,10 @@ public class desktopView extends javax.swing.JFrame {
         String header[] = new String[]{"ID Document", "Content", "Cosine Similarity"};
         tmodel.setColumnIdentifiers(header);
 
-        ArrayList<SearchingResult> hasilCari2 = Index.searchCosineSimilarity(query);
+        ArrayList<SearchingResult> valDoc = Index.searchCosineSimilarity(query);
         Object rowData[] = new Object[3];
-        for (int i = 0; i < hasilCari2.size(); i++) {
-            SearchingResult doc = hasilCari2.get(i);
+        for (int i = 0; i < valDoc.size(); i++) {
+            SearchingResult doc = valDoc.get(i);
             rowData[0] = doc.getDocument().getId();
             rowData[1] = doc.getDocument().getContent();
             rowData[2] = doc.getSimilarity();
