@@ -666,7 +666,8 @@ public class InvertedIndex2 {
             int id = listOfDocument.size()+1;
             doc.setId(id);
             doc.setContent(content);
-            //doc.IndonesiaStemming();
+            doc.setRealContent(content);
+            doc.IndonesiaStemming();
             listOfDocument.add(doc);
             makeDictionary();
             br.close();

@@ -244,6 +244,7 @@ public class desktopView extends javax.swing.JFrame {
             File dir = fileChooser.getSelectedFile();
             Index.readDirectory(dir);
         }
+        //readItemActionPerformed(evt);
     }//GEN-LAST:event_addItemActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -262,13 +263,13 @@ public class desktopView extends javax.swing.JFrame {
         String header[] = new String[]{"ID Document", "Content", "Cosine Similarity"};
         tmodel.setColumnIdentifiers(header);
 
-        ArrayList<SearchingResult> valDoc = Index.searchCosineSimilarity(query);
+        ArrayList<SearchingResult> tempDoc = Index.searchCosineSimilarity(query);
         Object rowData[] = new Object[3];
-        for (int i = 0; i < valDoc.size(); i++) {
-            SearchingResult doc = valDoc.get(i);
-            rowData[0] = doc.getDocument().getId();
-            rowData[1] = doc.getDocument().getContent();
-            rowData[2] = doc.getSimilarity();
+        for (int i = 0; i < tempDoc.size(); i++) {
+            SearchingResult tempSR = tempDoc.get(i);
+            rowData[0] = tempSR.getDocument().getId();
+            rowData[1] = tempSR.getDocument().getContent();
+            rowData[2] = tempSR.getSimilarity();
             tmodel.addRow(rowData);
         }
             TableHasil.setModel(tmodel);
