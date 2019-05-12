@@ -77,13 +77,15 @@ public class testreadfilefolder {
         Document doc = new Document();
         System.out.println("read file " + file.getCanonicalPath());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String content = "";
             String strLine;
             // Read lines from the file, returns null when end of stream 
             // is reached
             while ((strLine = br.readLine()) != null) {
-                doc.setContent(strLine);
+                content += strLine;
                 System.out.println("Line is - " + strLine);
             }
+            doc.setContent(strLine);
         }
     }
 

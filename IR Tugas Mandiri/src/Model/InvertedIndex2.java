@@ -653,20 +653,23 @@ public class InvertedIndex2 {
 
     public void readContent(File file) throws IOException {
         Document doc = new Document();
-        int i = 1;
 //        System.out.println("read file " + file.getCanonicalPath());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String content = "";
             String strLine;
             // Read lines from the file, returns null when end of stream 
             // is reached
             while ((strLine = br.readLine()) != null) {
-                doc.setContent(strLine);
-                doc.setId(i);
-                listOfDocument.add(doc);
-                makeDictionary();
+                content += strLine + " ";
                 // System.out.println("Line is - " + strLine);
-                i++;
             }
+            int id = listOfDocument.size()+1;
+            doc.setId(id);
+            doc.setContent(content);
+            //doc.IndonesiaStemming();
+            listOfDocument.add(doc);
+            makeDictionary();
+            br.close();
         }
     }
 

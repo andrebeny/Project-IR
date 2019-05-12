@@ -175,9 +175,6 @@ public class desktopView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(111, 111, 111)
@@ -188,7 +185,10 @@ public class desktopView extends javax.swing.JFrame {
                         .addGap(56, 56, 56)
                         .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(searchButton)))
+                        .addComponent(searchButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -205,9 +205,9 @@ public class desktopView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(queryInput, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
+                .addGap(109, 109, 109))
         );
 
         pack();
@@ -218,24 +218,31 @@ public class desktopView extends javax.swing.JFrame {
 
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
         Index.listAllFiles(folder);
-        Index.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-
+      
         ArrayList<Document> listDoc = Index.getListOfDocument();
         for (int i = 0; i < listDoc.size(); i++) {
             Document doc = listDoc.get(i);
-            System.out.println("ID ;" + doc.getId());
+            System.out.println("ID :" + doc.getId());
             System.out.println(doc.getContent());
         }
     }//GEN-LAST:event_readItemActionPerformed
 
     private void addItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemActionPerformed
         // TODO add your handling code here:
-        fileChooser.showOpenDialog(null);
-        File file = fileChooser.getSelectedFile();
-        String dir = file.getName();
+//        fileChooser.showOpenDialog(null);
+//        File file = fileChooser.getSelectedFile();
+//        String dir = file.getName();
+//
+//        if (!file.getName().endsWith("txt")) {
+//            JOptionPane.showMessageDialog(null, "File Format doesn't support. Please select txt file format only! ", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+        JOptionPane.showMessageDialog(this, "Please select folder with txt file format only");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        if (!file.getName().endsWith("txt")) {
-            JOptionPane.showMessageDialog(null, "File Format doesn't support. Please select txt file format only! ", "Error", JOptionPane.ERROR_MESSAGE);
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File dir = fileChooser.getSelectedFile();
+            Index.readDirectory(dir);
         }
     }//GEN-LAST:event_addItemActionPerformed
 
@@ -243,11 +250,12 @@ public class desktopView extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClusterFrame cf = new ClusterFrame();
         cf.setVisible(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        DefaultTableModel tmodel = (DefaultTableModel) TableHasil.getModel();
+        DefaultTableModel tmodel = new DefaultTableModel();
         String query = queryInput.getText();
         double result;
 
@@ -263,6 +271,8 @@ public class desktopView extends javax.swing.JFrame {
             rowData[2] = doc.getSimilarity();
             tmodel.addRow(rowData);
         }
+            TableHasil.setModel(tmodel);
+        
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void queryInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryInputActionPerformed

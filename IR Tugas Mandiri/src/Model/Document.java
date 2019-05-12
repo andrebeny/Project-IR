@@ -215,9 +215,7 @@ public class Document implements Comparable<Document> {
         Analyzer analyzer = new StandardAnalyzer();
         analyzer.setVersion(matchVersion);
         // buat token
-        TokenStream tokenStream = analyzer.tokenStream(
-                "myField",
-                new StringReader(text.trim()));
+        TokenStream tokenStream = analyzer.tokenStream("myField",new StringReader(text.trim()));
         // stemming
         tokenStream = new PorterStemFilter(tokenStream);
         // buat string baru tanpa stopword
@@ -259,9 +257,7 @@ public class Document implements Comparable<Document> {
         // ambil stopwords
         CharArraySet stopWords = IndonesianAnalyzer.getDefaultStopSet();
         // buat token
-        TokenStream tokenStream = analyzer.tokenStream(
-                "myField",
-                new StringReader(realContent.trim()));
+        TokenStream tokenStream = analyzer.tokenStream("myField",new StringReader(realContent.trim()));
         // buang stop word
         tokenStream = new StopFilter(tokenStream, stopWords);
         // buat string baru tanpa stopword

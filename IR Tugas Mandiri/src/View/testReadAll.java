@@ -6,7 +6,7 @@
 package View;
 
 import Model.Document;
-import Model.InvertedIndex;
+import Model.InvertedIndex2;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class testReadAll {
 
     public static void main(String[] args) throws IOException {
-        InvertedIndex tempInd = new InvertedIndex();
+        InvertedIndex2 tempInd = new InvertedIndex2();
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
         tempInd.listAllFiles(folder);
         tempInd.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");

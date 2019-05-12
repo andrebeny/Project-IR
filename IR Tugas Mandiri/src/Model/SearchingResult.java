@@ -11,7 +11,7 @@ package Model;
  * @author User
  */
 public class SearchingResult implements Comparable<SearchingResult> {
-    public static final int FAKTOR=1000; // faktor pengali similarity
+    public static final int FAKTOR = 1000; // faktor pengali similarity
     private double similarity;
     private Document document;
 
