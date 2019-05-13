@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -522,7 +523,7 @@ public class InvertedIndex2 {
         double result = hasilDotProduct / Math.sqrt(panjang_posting * panjang_posting1);
         if (result == 0) {
             return 0;
-        }else {
+        } else {
             return result;
         }
     }
@@ -663,10 +664,11 @@ public class InvertedIndex2 {
                 content += strLine + " ";
                 // System.out.println("Line is - " + strLine);
             }
-            int id = listOfDocument.size()+1;
+            int id = listOfDocument.size() + 1;
             doc.setId(id);
             doc.setContent(content);
             //doc.setRealContent(content);
+            //test stemming indonesia
             //doc.IndonesiaStemming();
             listOfDocument.add(doc);
             makeDictionary();
@@ -679,4 +681,6 @@ public class InvertedIndex2 {
         List<String> fileList = Files.readAllLines(filePath);
 //        System.out.println("" + fileList);
     }
+
+    
 }

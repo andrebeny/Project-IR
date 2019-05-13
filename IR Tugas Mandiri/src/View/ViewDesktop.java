@@ -7,17 +7,10 @@ package View;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.shape.Path;
 import Model.Document;
 import Model.InvertedIndex2;
-import Model.Posting;
 import Model.SearchingResult;
-import View.testreadfilefolder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,6 +45,7 @@ public class ViewDesktop extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         addItem = new javax.swing.JButton();
         readItem = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         queryInput = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -99,6 +93,7 @@ public class ViewDesktop extends javax.swing.JFrame {
         );
 
         addItem.setText("Add File");
+        addItem.setToolTipText("Add file from folder");
         addItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addItemActionPerformed(evt);
@@ -106,6 +101,7 @@ public class ViewDesktop extends javax.swing.JFrame {
         });
 
         readItem.setText("Read File");
+        readItem.setToolTipText("Read file(s) from folder");
         readItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 readItemActionPerformed(evt);
@@ -118,9 +114,11 @@ public class ViewDesktop extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(readItem, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(addItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(readItem, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,10 +128,13 @@ public class ViewDesktop extends javax.swing.JFrame {
                 .addComponent(addItem)
                 .addGap(18, 18, 18)
                 .addComponent(readItem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         searchButton.setText("Search");
+        searchButton.setToolTipText("search query");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchButtonActionPerformed(evt);
@@ -148,6 +149,7 @@ public class ViewDesktop extends javax.swing.JFrame {
 
             }
         ));
+        TableHasil.setToolTipText("");
         jScrollPane1.setViewportView(TableHasil);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -209,9 +211,11 @@ public class ViewDesktop extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Please select folder with txt file format only");
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        int returnVal = fileChooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        int retVal = fileChooser.showOpenDialog(this);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            //pilih file dari directory
             File dir = fileChooser.getSelectedFile();
+            //panggil method read directory
             Index.readDirectory(dir);
         }
         //readItemActionPerformed(evt);
@@ -219,36 +223,53 @@ public class ViewDesktop extends javax.swing.JFrame {
 
     private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
         // TODO add your handling code here:
-
+        //deklarasi lokasi folder yang berisi file txt
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        //list semua file txt yang ada di folder itu
         Index.listAllFiles(folder);
 
         ArrayList<Document> listDoc = Index.getListOfDocument();
         for (int i = 0; i < listDoc.size(); i++) {
             Document doc = listDoc.get(i);
-            System.out.println("ID :" + doc.getId());
-            System.out.println(doc.getContent());
+            //test sout semua dokumen
+//            System.out.println("ID :" + doc.getId());
+//            System.out.println(doc.getContent());
         }
+        //notice bahwa semua file berhasil dibaca
+        jLabel4.setText("Success");
     }//GEN-LAST:event_readItemActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
+        //dynamic table
         DefaultTableModel tmodel = new DefaultTableModel();
+        // ambil inputan query dengan object baru
         String query = queryInput.getText();
+        //buat object result;
         double result;
 
+        // membuat nama kolom
         String header[] = new String[]{"ID Document", "Content", "Cosine Similarity"};
+        // masukkan nama kolom ke tabel
         tmodel.setColumnIdentifiers(header);
 
+        //buat object tempDoc = searchCosine
         ArrayList<SearchingResult> tempDoc = Index.searchCosineSimilarity(query);
         Object rowData[] = new Object[3];
+        //looping sebanyak data
         for (int i = 0; i < tempDoc.size(); i++) {
+            // hasil pencarian ditampung
             SearchingResult tempSR = tempDoc.get(i);
+            //get ID dokumen untuk dimasukkan ke kolom 1
             rowData[0] = tempSR.getDocument().getId();
+            // get content untuk di masukkan ke kolom 2
             rowData[1] = tempSR.getDocument().getContent();
+            // get hasil cosine untuk di masukkan ke kolom 3
             rowData[2] = tempSR.getSimilarity();
+            // masukkan semua hasil tadi ke masing-masing kolom
             tmodel.addRow(rowData);
         }
+        // set table ke semula apabila dilakukan pencarian lagi
         TableHasil.setModel(tmodel);
 
     }//GEN-LAST:event_searchButtonActionPerformed
@@ -295,6 +316,7 @@ public class ViewDesktop extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
