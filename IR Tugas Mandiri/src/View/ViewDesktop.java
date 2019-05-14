@@ -44,7 +44,6 @@ public class ViewDesktop extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         addItem = new javax.swing.JButton();
-        readItem = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         queryInput = new javax.swing.JTextField();
@@ -100,26 +99,18 @@ public class ViewDesktop extends javax.swing.JFrame {
             }
         });
 
-        readItem.setText("Read File");
-        readItem.setToolTipText("Read file(s) from folder");
-        readItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readItemActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(addItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(readItem, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addItem, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,8 +118,6 @@ public class ViewDesktop extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(addItem)
                 .addGap(18, 18, 18)
-                .addComponent(readItem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -218,26 +207,9 @@ public class ViewDesktop extends javax.swing.JFrame {
             //panggil method read directory
             Index.readDirectory(dir);
         }
+        jLabel4.setText("add success");
         //readItemActionPerformed(evt);
     }//GEN-LAST:event_addItemActionPerformed
-
-    private void readItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readItemActionPerformed
-        // TODO add your handling code here:
-        //deklarasi lokasi folder yang berisi file txt
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        //list semua file txt yang ada di folder itu
-        Index.listAllFiles(folder);
-
-        ArrayList<Document> listDoc = Index.getListOfDocument();
-        for (int i = 0; i < listDoc.size(); i++) {
-            Document doc = listDoc.get(i);
-            //test sout semua dokumen
-//            System.out.println("ID :" + doc.getId());
-//            System.out.println(doc.getContent());
-        }
-        //notice bahwa semua file berhasil dibaca
-        jLabel4.setText("Success");
-    }//GEN-LAST:event_readItemActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
@@ -301,13 +273,27 @@ public class ViewDesktop extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ViewDesktop().setVisible(true);
             }
         });
+        
+        InvertedIndex2 tempInd = new InvertedIndex2();
+        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        //list semua file txt yang ada di folder itu
+        tempInd.listAllFiles(folder);
+
+        ArrayList<Document> listDoc = tempInd.getListOfDocument();
+        for (int i = 0; i < listDoc.size(); i++) {
+            Document doc = listDoc.get(i);
+            //test sout semua dokumen
+            System.out.println("ID :" + doc.getId());
+            System.out.println(doc.getContent());
+        }
+          
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -322,7 +308,6 @@ public class ViewDesktop extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField queryInput;
-    private javax.swing.JButton readItem;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }
