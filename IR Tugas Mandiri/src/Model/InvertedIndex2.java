@@ -520,7 +520,7 @@ public class InvertedIndex2 {
         // cari panjang posting1
         double panjang_posting1 = getLengthOfPosting(posting1);
         // hitung cosine similarity
-        double result = hasilDotProduct / Math.sqrt(panjang_posting * panjang_posting1);
+        double result = hasilDotProduct / (Math.sqrt(panjang_posting * panjang_posting1));
         if (result == 0) {
             return 0;
         } else {
