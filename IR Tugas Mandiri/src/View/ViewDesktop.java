@@ -27,6 +27,7 @@ public class ViewDesktop extends javax.swing.JFrame {
      */
     public ViewDesktop() {
         initComponents();
+        readData();
     }
 
     /**
@@ -211,6 +212,13 @@ public class ViewDesktop extends javax.swing.JFrame {
         //readItemActionPerformed(evt);
     }//GEN-LAST:event_addItemActionPerformed
 
+    public void readData() {
+        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+        Index.readDirectory(folder);
+        jLabel4.setText("Success");
+        
+    }
+
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
         //dynamic table
@@ -273,28 +281,31 @@ public class ViewDesktop extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ViewDesktop().setVisible(true);
             }
         });
-        
-        InvertedIndex2 tempInd = new InvertedIndex2();
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        //list semua file txt yang ada di folder itu
-        tempInd.listAllFiles(folder);
-
-        ArrayList<Document> listDoc = tempInd.getListOfDocument();
-        for (int i = 0; i < listDoc.size(); i++) {
-            Document doc = listDoc.get(i);
-            //test sout semua dokumen
-            System.out.println("ID :" + doc.getId());
-            System.out.println(doc.getContent());
-        }
-          
+      
     }
+
+//    public void bacaData() {
+//        InvertedIndex2 tempInd = new InvertedIndex2();
+//        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+//        //list semua file txt yang ada di folder itu
+//        tempInd.listAllFiles(folder);
+//
+//        ArrayList<Document> listDoc = tempInd.getListOfDocument();
+//        for (int i = 0; i < listDoc.size(); i++) {
+//            Document doc = listDoc.get(i);
+//            //test sout semua dokumen
+////            System.out.println("ID :" + doc.getId());
+////            System.out.println(doc.getContent());
+//        }
+//        jLabel4.setText("Success");
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableHasil;

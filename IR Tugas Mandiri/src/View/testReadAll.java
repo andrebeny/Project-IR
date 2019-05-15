@@ -20,15 +20,16 @@ public class testReadAll {
     public static void main(String[] args) throws IOException {
         InvertedIndex2 tempInd = new InvertedIndex2();
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-        tempInd.listAllFiles(folder);
-        tempInd.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
-      
+        tempInd.readDirectory(folder);
+        //tempInd.listAllFiles(folder);
+        
         ArrayList<Document> listDoc = tempInd.getListOfDocument();
         for (int i = 0; i <listDoc.size(); i++) {
             Document doc = listDoc.get(i);
-            System.out.println("ID ;"+doc.getId());
+            System.out.println("ID :"+doc.getId());
             System.out.println(doc.getContent());
         }
 
     }
 }
+
