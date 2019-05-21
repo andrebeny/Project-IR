@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import Model.Document;
 import Model.InvertedIndex2;
 import Model.SearchingResult;
+import java.util.Collections;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -216,8 +217,8 @@ public class ViewDesktop extends javax.swing.JFrame {
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
         Index.readDirectory(folder);
         jLabel4.setText("Load Success");
-        
     }
+    
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:

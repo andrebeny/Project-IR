@@ -9,7 +9,7 @@ import java.io.*;
 import java.nio.*;
 import javax.swing.JOptionPane;
 import Model.Document;
-import Model.InvertedIndex;
+import Model.InvertedIndex2;
 import Model.Posting;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,10 +26,11 @@ public class testreadfilefolder {
         File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
         testreadfilefolder listFiles = new testreadfilefolder();
         System.out.println("reading files before Java8 - Using listFiles() method");
+        System.out.println("");
         listFiles.listAllFiles(folder);
         System.out.println("-------------------------------------------------");
-        System.out.println("reading files Java8 - Using Files.walk() method");
-        listFiles.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
+//        System.out.println("reading files Java8 - Using Files.walk() method");
+//        listFiles.listAllFiles("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR\\IR Tugas Mandiri\\Dokumen");
 
     }
     // Uses listFiles method  
