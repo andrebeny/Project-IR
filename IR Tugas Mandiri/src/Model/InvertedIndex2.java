@@ -590,7 +590,7 @@ public class InvertedIndex2 {
             }
         }
         // urutkan hasil cari
-//        Collections.sort(result);
+        Collections.sort(result);
         return result;
     }
 

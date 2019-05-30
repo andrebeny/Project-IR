@@ -23,7 +23,7 @@ import static sun.reflect.annotation.AnnotationParser.toArray;
 public class testreadfilefolder {
 
     public static void main(String[] args) {
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
+        File folder = new File("C:\\Users\\ASUS.DESKTOP-CCOM20V\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
         testreadfilefolder listFiles = new testreadfilefolder();
         System.out.println("reading files before Java8 - Using listFiles() method");
         System.out.println("");

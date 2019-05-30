@@ -19,7 +19,7 @@ public class testReadAll {
 
     public static void main(String[] args) throws IOException {
         InvertedIndex2 tempInd = new InvertedIndex2();
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
+        File folder = new File("C:\\Users\\ASUS.DESKTOP-CCOM20V\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
         tempInd.readDirectory(folder);
 //        tempInd.listAllFiles(folder);
         

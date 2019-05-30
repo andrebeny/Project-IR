@@ -210,11 +210,11 @@ public class ViewDesktop extends javax.swing.JFrame {
             Index.readDirectory(dir);
         }
         jLabel4.setText("Add Success");
-        //readItemActionPerformed(evt);
+        
     }//GEN-LAST:event_addItemActionPerformed
 
     public void readData() {
-        File folder = new File("C:\\Users\\User\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
+        File folder = new File("C:\\Users\\ASUS.DESKTOP-CCOM20V\\Documents\\NetBeansProjects\\Project-IR 8 mei\\IR Tugas Mandiri\\Dokumen Pemberantasan TIPIKOR");
         Index.readDirectory(folder);
         jLabel4.setText("Load Success");
     }
